@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TemplatePackages", "TemplatePackages", "{0AD6E692-E423-408C-B523-DAFB19412E4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alchiweb.AlchiFxCore", "src\Alchiweb.AlchiFxCore\Alchiweb.AlchiFxCore.csproj", "{260EBA09-DEF5-429C-99BF-90CA1456A576}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{F34CD7D7-1E8F-41FA-AB4D-D86BFD3AC09B}"
+	ProjectSection(SolutionItems) = preProject
+		build\dependencies.props = build\dependencies.props
+		build\repo.props = build\repo.props
+		build\sources.props = build\sources.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{260EBA09-DEF5-429C-99BF-90CA1456A576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260EBA09-DEF5-429C-99BF-90CA1456A576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260EBA09-DEF5-429C-99BF-90CA1456A576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260EBA09-DEF5-429C-99BF-90CA1456A576}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{260EBA09-DEF5-429C-99BF-90CA1456A576} = {0AD6E692-E423-408C-B523-DAFB19412E4B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9B27B0D-4F85-431B-9C26-80CFE4393D36}
+	EndGlobalSection
+EndGlobal
