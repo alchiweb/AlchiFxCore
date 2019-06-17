@@ -1,0 +1,1 @@
+@dotnet new alchifxcore --auth Individual --use-local-db -o %1
