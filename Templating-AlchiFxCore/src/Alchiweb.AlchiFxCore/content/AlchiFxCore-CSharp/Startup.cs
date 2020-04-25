@@ -44,6 +44,7 @@ using Microsoft.IdentityModel.Tokens;
 #endif
 using EntitySignal.Extensions;
 using EntitySignal.Hubs;
+using Microsoft.Extensions.Hosting;
 
 namespace Company.WebApplication1
 {
@@ -76,7 +77,6 @@ namespace Company.WebApplication1
                     Configuration.GetConnectionString("DefaultConnection")));
 #endif
             services.AddDefaultIdentity<AlchiUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<AlchiDbContext>();
 #elif (OrganizationalAuth)
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
@@ -130,31 +130,31 @@ namespace Company.WebApplication1
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            });
+            //.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 #else
             services
                 .AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN")
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                //.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 #endif
 
             services.AddScoped<IDataApiService, DataApiService>();
 
-            services.AddAutoMapper(options => options.AddProfile<MappingProfileApi>());
+            services.AddAutoMapper(options => options.AddProfile<MappingProfileApi>(), typeof(Startup));
 
             services.AddSignalR()
-                //.AddJsonProtocol(options => {
-                //    options.PayloadSerializerSettings.ContractResolver =
-                //    new DefaultContractResolver();
-                //})
+                .AddNewtonsoftJsonProtocol(options => {
+                    options.PayloadSerializerSettings.ContractResolver =
+                    new DefaultContractResolver();
+                })
                 ;
             services.AddEntitySignal();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -178,22 +178,21 @@ namespace Company.WebApplication1
 #endif
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseRouting();
+
 
 #if (OrganizationalAuth || IndividualAuth)
             app.UseAuthentication();
+            app.UseAuthorization();
 #endif
 
             app.UseWebSockets();
-            app.UseSignalR(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<EntitySignalHub>("/dataHub");
-            });
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<EntitySignalHub>("/dataHub");
             });
         }
     }
