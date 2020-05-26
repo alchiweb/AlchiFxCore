@@ -1,6 +1,7 @@
 # AlchiFxCore
 
-AlchiFxCore est un template de projet C# permettant de créer des projets C# pour Visual Studio 2019 (et 2017) :
+AlchiFxCore est un template de projet C# permettant de créer des projets C# pour Visual Studio 2019 (et 2017).
+[Fichier de documentation (.docx)](https://github.com/alchiweb/AlchiFxCore/raw/master/docs/Alchiweb-Dev-AlchiFxCore.docx)
 
 # Le site généré :
 ## Utilise principalement les technologies :
